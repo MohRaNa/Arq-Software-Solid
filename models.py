@@ -1,22 +1,17 @@
-from flask_sqlalchemy import SQLAlchemy
+from peewee import SqliteDatabase, Model, CharField, FloatField, IntegerField, DateField
 
-db = SQLAlchemy()
+db = SqliteDatabase('grocery.db')  # Crea o conecta a la base de datos SQLite
 
-class Item(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    SKU = db.Column(db.String(20), unique=True, nullable=False)
-    Name = db.Column(db.String(100), nullable=False)
-    Description = db.Column(db.String(200), nullable=True)
-    Price = db.Column(db.Float, nullable=False)
-    Quantity = db.Column(db.Integer, nullable=False)
-    Expiration_Date = db.Column(db.String(10), nullable=False)
+class GroceryItem(Model):
+    sku = CharField(primary_key=True)
+    name = CharField()
+    description = CharField()
+    price = FloatField()
+    quantity = IntegerField()
+    expiration_date = DateField()
 
-    def serialize(self):
-        return {
-            'SKU': self.SKU,
-            'Name': self.Name,
-            'Description': self.Description,
-            'Price': self.Price,
-            'Quantity': self.Quantity,
-            'Expiration Date': self.Expiration_Date
-        }
+    class Meta:
+        database = db
+
+db.connect()
+db.create_tables([GroceryItem])
