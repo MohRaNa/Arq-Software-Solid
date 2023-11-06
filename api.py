@@ -4,6 +4,30 @@ import requests
 
 app = Flask(__name__)
 
+API_BASE_URL = "https://api.exchangeratesapi.io/v1/"
+API_KEY = "300c6eb13a807d4bb3d5230fc36421e7"
+
+# Función para obtener tasas de cambio
+def get_exchange_rates():
+    url = f"{API_BASE_URL}latest?access_key={API_KEY}"
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        data = response.json()
+        return data.get('rates', {})
+    else:
+        return {}
+
+# Función para convertir moneda
+def convert_currency(amount, from_currency, to_currency):
+    rates = get_exchange_rates()
+    if from_currency in rates and to_currency in rates:
+        conversion_rate = rates[to_currency] / rates[from_currency]
+        converted_amount = amount * conversion_rate
+        return converted_amount
+    else:
+        return None
+
 # Ruta para obtener todos los elementos
 @app.route('/item', methods=['GET'])
 def get_items():
@@ -28,11 +52,20 @@ def delete_item(sku):
         return 'Elemento no encontrado', 404
 
 # Ruta para obtener elementos por moneda
-@app.route('/item', methods=['GET'])
+@app.route('/item/currency', methods=['GET'])
 def get_items_by_currency():
     currency = request.args.get('currency', 'USD')
     items = list(GroceryItem.select().where(GroceryItem.currency == currency))
-    return jsonify([item.serialize() for item in items])
+    
+    # Realiza conversiones de moneda para los precios
+    converted_items = []
+    for item in items:
+        converted_price = convert_currency(item.price, "USD", currency)
+        if converted_price is not None:
+            item.price = converted_price
+            converted_items.append(item.serialize())
+
+    return jsonify(converted_items)
 
 if __name__ == '__main__':
     app.run(debug=True)
