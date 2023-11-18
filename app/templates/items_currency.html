@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lista de Artículos (MXN)</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lista de Artículos (MXN)</h1>
+    <button>
+        <a href="{{ url_for('add_item') }}">Agregar Artículo</a>
+    </button>
+    <br>
+    <br>
+    <button>
+        <a href="{{ url_for('view_items') }}">Ver en USD</a>
+    </button>
+    <table>
+        <thead>
+            <tr>
+                <th>SKU</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Precio (MXN)</th>
+                <th>Cantidad</th>
+                <th>Fecha de Expiración</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td>{{ item.SKU }}</td>
+                <td>{{ item.Name }}</td>
+                <td>{{ item.Description }}</td>
+                <td>{{ item.Price }} {{ item.currency }}</td>
+                <td>{{ item.Quantity }}</td>
+                <td>{{ item.Expiration_Date }}</td>
+                <td>
+                    <a href="{{ url_for('delete_item', sku=item.SKU) }}">Eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

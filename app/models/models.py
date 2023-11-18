@@ -1,6 +1,6 @@
 from peewee import SqliteDatabase, Model, CharField, FloatField, IntegerField, DateField
 
-db = SqliteDatabase('grocery.db')  # Crea o conecta a la base de datos SQLite
+db = SqliteDatabase('grocery.db') 
 
 class GroceryItem(Model):
     SKU = CharField(primary_key=True)
@@ -8,8 +8,7 @@ class GroceryItem(Model):
     Description = CharField()
     Price = FloatField()
     Quantity = IntegerField()
-    #Arreglar Expiration_Date
-    Expiration_date = DateField(null=True, default='9999-12-31')
+    Expiration_Date = DateField(null=True)
 
     class Meta:
         database = db

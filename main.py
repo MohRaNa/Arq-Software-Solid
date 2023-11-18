@@ -1,14 +1,15 @@
 import csv
-from models import db, GroceryItem
-from api import app
+from app.models.models import db, GroceryItem
+from app.app import app
 
 def load_data_from_csv(filename):
     with open(filename, 'r') as f:
-        reader = csv.DictReader(f)
+        csv_data = f.read().replace("Expiration Date", "Expiration_Date")
+        reader = csv.DictReader(csv_data.splitlines())
         items = list(reader)
     with db.atomic():
         for item in items:
-            sku = item['SKU'].upper()  # Convierte SKU a mayúsculas
+            sku = item['SKU'].upper() 
             existing_item, created = GroceryItem.get_or_create(SKU=sku, defaults=item)
             if not created:
                 # Actualiza los campos del elemento existente si es necesario

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Agregar Artículo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 50px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .form-group button {
+            background: #007BFF;
+            color: #fff;
+            border: 0;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Agregar Artículo</h2>
+        <form method="post">
+            <div class="form-group">
+                <label for="SKU">SKU:</label>
+                <input type="text" name="SKU" id="SKU" required>
+            </div>
+            <div class="form-group">
+                <label for="Name">Nombre:</label>
+                <input type="text" name="Name" id="Name" required>
+            </div>
+            <div class="form-group">
+                <label for="Description">Descripción:</label>
+                <input type="text" name="Description" id="Description" required>
+            </div>
+            <div class="form-group">
+                <label for="Price">Precio:</label>
+                <input type="text" name="Price" id="Price" required>
+            </div>
+            <div class="form-group">
+                <label for="Quantity">Cantidad:</label>
+                <input type="text" name="Quantity" id="Quantity" required>
+            </div>
+            <div class="form-group">
+                <label for="Expiration_date">Fecha de Expiración:</label>
+                <input type="date" name="Expiration_Date" id="Expiration_Date" required>
+            </div>
+            <button type="submit">Agregar</button>
+        </form>
+        <a class="back-button" href="/items">Regresar a la Lista de Artículos</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Eliminar Artículo</title>
+</head>
+<body>
+    <h1>Eliminar Artículo</h1>
+    <p>¿Estás seguro de que deseas eliminar el artículo con SKU {{ sku }}?</p>
+    <form method="post">
+        <input type="submit" value="Eliminar">
+    </form>
+    <a href="{{ url_for('view_items') }}">Volver a la lista de artículos</a>
+</body>
+</html>
